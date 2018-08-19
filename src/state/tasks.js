@@ -46,7 +46,7 @@ export default (state = initialState, action) => {
             ...state,
             tasks: state.tasks.concat({
                 taskName:state.text,
-                uid: Date.now()
+                uid: Date.now(),
             })
         }
         default:
