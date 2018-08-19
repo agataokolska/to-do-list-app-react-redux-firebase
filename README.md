@@ -1,3 +1,13 @@
+##Hello, this is my ToDo App
+
+To use app on your computer or phone simply visit http://to-do-list-app-react-redux.surge.sh/
+
+To login as guest user please add:
+login: example@example.com
+password: example1234
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
