@@ -5,7 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 
 import { ListItem } from 'material-ui/List'
 import Paper from 'material-ui/Paper'
-import { addTaskAction, handleChangeAction } from '../state/tasks'
+import { addTaskAction, handleChangeAction, onAddTaskClickAction } from '../state/tasks'
 
 
 const styles = {
@@ -24,6 +24,7 @@ const TaskList = (props) => (
                 fullWidth={true}
             />
             <RaisedButton
+               //onClick={props._onAddTaskClickAction}
                 onClick={props._addTaskAction}
                 label="Add task"
                 primary={true}
@@ -49,7 +50,8 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = dispatch => ({
     _addTaskAction: () => dispatch(addTaskAction()),
-    _handleChangeAction: (value) => dispatch(handleChangeAction(value))
+    _handleChangeAction: (value) => dispatch(handleChangeAction(value)),
+    _onAddTaskClickAction: () => dispatch(onAddTaskClickAction())
 })
 
 export default connect(

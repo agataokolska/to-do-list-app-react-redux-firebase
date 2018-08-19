@@ -15,21 +15,34 @@ export const tasksStartedLoadingAction = () => ({ type: TASKS_STARTED_LOADING })
 export const tasksStoppedLoadingAction = () => ({ type: TASKS_STOPPED_LOADING })
 
 
-export const fetchTasksAction = () => (dispatch, getState) => {
-    const state = getState()
-    const userId = state.auth.user.uid
-    database
-        .ref(`${userId}/tasks`)
-        .on('value', snapshot => {
-            const firebaseData = Object.entries(snapshot.val() || {}).map(([id, value]) => {
-                value.id = id
-                return value
-            })
+// export const fetchTasksAction = () => (dispatch, getState) => {
+//     const state = getState()
+//     const user = state.auth.user.uid
 
-            dispatch(setTasksAction(firebaseData))
-        })
-    }
+//     database
+//         .ref(`${user}/tasks`)
+//         .on('value', snapshot => {
+//             const firebaseData = Object.entries(snapshot.val() || {}).map(([id, value]) => {
+//                 value.id = id
+//                 return value
+//             })
 
+//             dispatch(setTasksAction(firebaseData))
+//         })
+//     }
+
+
+//     export const onAddTaskClickAction = () => (dispatch, getState) => {
+//         const state = getState()
+//         const user = state.auth.user.uid
+    
+//         database.ref(`${user}/tasks`).push({
+//             task: state.newTask.task,
+            
+//         })
+    
+//         dispatch( ())
+//     }
 
 const initialState = {
     tasks: [],
