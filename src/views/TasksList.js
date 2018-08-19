@@ -2,10 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
-
+import Delete from 'material-ui/svg-icons/action/delete'
 import { ListItem } from 'material-ui/List'
 import Paper from 'material-ui/Paper'
-import { addTaskAction, handleChangeAction, onAddTaskClickAction } from '../state/tasks'
+import { addTaskAction, handleChangeAction, onAddTaskClickAction, deleteTaskAction } from '../state/tasks'
 
 
 const styles = {
@@ -36,7 +36,12 @@ const TaskList = (props) => (
                     'Loading tasks, please wait for a moment'
                     :
                     props._tasks.map((task, uid) => (
-                        <ListItem key={uid}>{task.taskName}</ListItem>
+                        <ListItem 
+                        key={uid}
+                        rightIcon={<Delete onClick={()=> props._deleteTaskAction(task.uid)}/>}
+                        >
+                        {task.taskName} 
+                        </ListItem>
                     ))
 
             }
@@ -51,7 +56,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     _addTaskAction: () => dispatch(addTaskAction()),
     _handleChangeAction: (value) => dispatch(handleChangeAction(value)),
-    _onAddTaskClickAction: () => dispatch(onAddTaskClickAction())
+    _onAddTaskClickAction: () => dispatch(onAddTaskClickAction()),
+    _deleteTaskAction: (uid) => dispatch(deleteTaskAction(uid))
 })
 
 export default connect(

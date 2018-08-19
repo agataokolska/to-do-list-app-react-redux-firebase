@@ -10,7 +10,7 @@ const TASKS_STOPPED_LOADING = 'tasks/TASKS_STOPPED_LOADING'
 export const setTasksAction = data => ({ type: SET_TASKS, data })
 export const addTaskAction = value => ({ type: ADD_TASK, value })
 export const handleChangeAction = (event) => ({ type: HANDLE_CHANGE, text: event.target.value })
-export const deleteTaskAction = () => ({ type: DELETE_TASK })
+export const deleteTaskAction = (uid) => ({ type: DELETE_TASK, uid })
 export const tasksStartedLoadingAction = () => ({ type: TASKS_STARTED_LOADING })
 export const tasksStoppedLoadingAction = () => ({ type: TASKS_STOPPED_LOADING })
 
@@ -35,12 +35,12 @@ export const tasksStoppedLoadingAction = () => ({ type: TASKS_STOPPED_LOADING })
 //     export const onAddTaskClickAction = () => (dispatch, getState) => {
 //         const state = getState()
 //         const user = state.auth.user.uid
-    
+
 //         database.ref(`${user}/tasks`).push({
 //             task: state.newTask.task,
-            
+
 //         })
-    
+
 //         dispatch( ())
 //     }
 
@@ -68,18 +68,25 @@ export default (state = initialState, action) => {
                 isTasksAreLoading: false
             }
         case HANDLE_CHANGE:
-        return {
-            ...state,
-            text: action.text
-        }
+            return {
+                ...state,
+                text: action.text
+            }
         case ADD_TASK:
-        return {
-            ...state,
-            tasks: state.tasks.concat({
-                taskName:state.text,
-                uid: Date.now(),
-            })
-        }
+            return {
+                ...state,
+                tasks: state.tasks.concat({
+                    taskName: state.text,
+                    uid: Date.now(),
+                })
+            }
+        case DELETE_TASK:
+            return {
+                ...state,
+                tasks: state.tasks.filter(task => {
+                    return task.uid !== action.uid
+                })
+            }
         default:
             return state
     }
