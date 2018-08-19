@@ -1,3 +1,5 @@
+import { database } from '../firebaseConfig'
+
 const SET_TASKS = 'tasks/SET_TASKS'
 const ADD_TASK = 'tasks/ADD_TASKS'
 const DELETE_TASK = 'tasks/DELETE_TASK'
@@ -11,6 +13,22 @@ export const handleChangeAction = (event) => ({ type: HANDLE_CHANGE, text: event
 export const deleteTaskAction = () => ({ type: DELETE_TASK })
 export const tasksStartedLoadingAction = () => ({ type: TASKS_STARTED_LOADING })
 export const tasksStoppedLoadingAction = () => ({ type: TASKS_STOPPED_LOADING })
+
+
+export const fetchTasksAction = () => (dispatch, getState) => {
+    const state = getState()
+    const userId = state.auth.user.uid
+    database
+        .ref(`${userId}/tasks`)
+        .on('value', snapshot => {
+            const firebaseData = Object.entries(snapshot.val() || {}).map(([id, value]) => {
+                value.id = id
+                return value
+            })
+
+            dispatch(setTasksAction(firebaseData))
+        })
+    }
 
 
 const initialState = {
