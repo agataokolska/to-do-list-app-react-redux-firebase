@@ -1,9 +1,9 @@
-##Hello, this is my ToDo App
+## Hello, this is my ToDo App
 
 To use app on your computer or phone simply visit http://to-do-list-app-react-redux.surge.sh/
 
-To login as guest user please add:
-login: example@example.com
+To login as guest user please add: <br>
+login: example@example.com <br>
 password: example1234
 
 
