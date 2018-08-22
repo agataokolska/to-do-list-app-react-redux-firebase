@@ -20,7 +20,7 @@ const TaskList = (props) => (
                 onChange={(value) => props._handleChangeAction(value)}
                 placeholder={'write new task here'}
                 type='text'
-                value={props._task}
+                value={props._text}
                 fullWidth={true}
             />
             <RaisedButton
@@ -50,6 +50,7 @@ const TaskList = (props) => (
     </div>
 )
 const mapStateToProps = state => ({
+    _text: state.tasks.text,
     _tasks: state.tasks.tasks,
     _isTasksAreLoading: state.tasks.isTasksAreLoading
 })
