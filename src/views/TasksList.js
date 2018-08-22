@@ -24,8 +24,8 @@ const TaskList = (props) => (
                 fullWidth={true}
             />
             <RaisedButton
-               //onClick={props._onAddTaskClickAction}
-                onClick={props._addTaskAction}
+               onClick={props._onAddTaskClickAction}
+                // onClick={props._addTaskAction}
                 label="Add task"
                 primary={true}
                 fullWidth={true} />

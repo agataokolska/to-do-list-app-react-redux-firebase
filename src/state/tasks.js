@@ -19,11 +19,12 @@ export const fetchTasksAction = () => (dispatch, getState) => {
     const state = getState()
     const user = state.auth.user.uid
 
+    console.warn('asking for: ', `users/userId/${user}`)
     database
-        .ref(`${user}/tasks`)
+        .ref(`users/${user}/tasks`)
         .on('value', snapshot => {
-            const firebaseData = Object.entries(snapshot.val() || {}).map(([id, value]) => {
-                value.id = id
+            const firebaseData = Object.entries(snapshot.val() || {}).map(([uid, value]) => {
+                value.uid = uid
                 return value
             })
 
@@ -32,17 +33,18 @@ export const fetchTasksAction = () => (dispatch, getState) => {
     }
 
 
-//     export const onAddTaskClickAction = () => (dispatch, getState) => {
-//         const state = getState()
-//         const user = state.auth.user.uid
+    export const onAddTaskClickAction = () => (dispatch, getState) => {
+        const state = getState()
+        const user = state.auth.user.uid
 
-//         database.ref(`${user}/tasks`).push({
-//             task: state.newTask.task,
+        console.error('what in state', state);
+        console.warn('what to push:', state.tasks.text)
+        database.ref(`users/${user}/tasks`).push({
+            taskName: state.tasks.text,
+        })
 
-//         })
-
-//         dispatch( ())
-//     }
+        //dispatch(addTaskAction())
+    }
 
 const initialState = {
     tasks: [],
