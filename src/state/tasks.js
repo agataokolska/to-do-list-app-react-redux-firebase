@@ -11,7 +11,6 @@ const CLEAR_INPUT = 'tasks/CLEAR_INPUT'
 export const setTasksAction = data => ({ type: SET_TASKS, data })
 export const addTaskAction = value => ({ type: ADD_TASK, value })
 export const handleChangeAction = (event) => ({ type: HANDLE_CHANGE, text: event.target.value })
-export const deleteTaskAction = (uid) => ({ type: DELETE_TASK, uid })
 export const tasksStartedLoadingAction = () => ({ type: TASKS_STARTED_LOADING })
 export const tasksStoppedLoadingAction = () => ({ type: TASKS_STOPPED_LOADING })
 export const clearInputAction = () => ({ type: CLEAR_INPUT })
@@ -45,14 +44,10 @@ export const onAddTaskClickAction = () => (dispatch, getState) => {
     dispatch(clearInputAction())
 }
 
-export const onDeleteTaskClickAction = () => (dispatch, getState) => {
+export const onDeleteTaskClickAction = (taskId) => (dispatch, getState) => {
     const state = getState()
-    const taskId = state.tasks.uid
     const user = state.auth.user.uid
-    database.ref(`users/${user}/tasks/${taskId}`).remove({
-        taskName: state.tasks.text,
-    })
-    dispatch(deleteTaskAction(taskId))
+    database.ref(`users/${user}/tasks/${taskId}`).remove()
 }
 
 const initialState = {
@@ -90,13 +85,6 @@ export default (state = initialState, action) => {
                     taskName: state.text,
                     uid: Date.now(),
 
-                })
-            }
-        case DELETE_TASK:
-            return {
-                ...state,
-                tasks: state.tasks.filter(task => {
-                    return task.uid !== action.uid
                 })
             }
         case CLEAR_INPUT:
