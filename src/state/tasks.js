@@ -45,6 +45,16 @@ export const onAddTaskClickAction = () => (dispatch, getState) => {
     dispatch(clearInputAction())
 }
 
+export const onDeleteTaskClickAction = () => (dispatch, getState) => {
+    const state = getState()
+    const taskId = state.tasks.uid
+    const user = state.auth.user.uid
+    database.ref(`users/${user}/tasks/${taskId}`).remove({
+        taskName: state.tasks.text,
+    })
+    dispatch(deleteTaskAction(taskId))
+}
+
 const initialState = {
     tasks: [],
     text: '',
